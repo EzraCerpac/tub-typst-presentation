@@ -7,11 +7,15 @@ An **unofficial** Typst presentation template following TU Berlin's corporate de
 ### Features
 
 - Official TU Berlin colors (Red `#c50e1f`, Gray `#717171`)
-- Slide types: title, content, section, focus
+- Slide types: title, content, section, outline, ending
 - Two-column and multi-column layouts via `composer`
 - Slide animations with `#pause` and `#meanwhile`
 - Header with slide title and logo, 3-column footer with author/title/date+page
-- Content helpers: `alert-box`, `highlight-box`, `emphasis`
+- Optional progress bar in footer
+- Content helpers: `alert-box`, `highlight-box`, `emphasis`, `tub-block`, `quote-block`
+- Academic helpers: `tub-theorem`, `tub-definition`, `tub-example`
+- Footnote-style citations with `slide-cite` and bottom-aligned references with `slide-ref`
+- Speaker notes via Touying's built-in `speaker-note`
 
 ## Quick Start
 
@@ -23,6 +27,7 @@ An **unofficial** Typst presentation template following TU Berlin's corporate de
   aspect-ratio: "16-9",
   department: [Department of Computer Science],
   logo: image("assets/logos/tub_logo.png"),
+  progress-bar: true,
   config-info(
     title: [My Presentation Title],
     subtitle: [Optional Subtitle],
@@ -34,6 +39,8 @@ An **unofficial** Typst presentation template following TU Berlin's corporate de
 
 #title-slide()
 
+#outline-slide()
+
 = Section Heading        // auto-generates a section slide
 
 == Slide Title            // auto-generates a content slide
@@ -43,8 +50,6 @@ An **unofficial** Typst presentation template following TU Berlin's corporate de
 #pause                    // animation: reveals next content on click
 
 - Third point (appears after pause)
-
-#focus-slide[Questions?]  // full-screen red slide
 ```
 
 ## Installation
@@ -90,13 +95,37 @@ Each content slide has a header bar (title + logo) and a 3-column footer.
 
 Auto-generated when using `= Heading` (level-1 heading). Displays the section name centered in TU Berlin red. No header/footer.
 
-### Focus Slide
+### Outline Slide
 
 ```typst
-#focus-slide[Questions?]
+#outline-slide()
 ```
 
-Full-screen red background with large white text. Use for key takeaways or closing slides.
+Displays a table-of-contents style outline of all sections. The current section is highlighted while others are dimmed (progressive outline). No header/footer.
+
+### Ending Slide
+
+```typst
+#ending-slide(title: [Thank You!])[
+  Author Name \
+  author@tu-berlin.de
+]
+```
+
+A centered closing slide with the title rendered in a red rounded block and body content below. No header/footer. Use for "Thank you", "Questions?", or contact information.
+
+## Progress Bar
+
+A thin red progress bar appears below the footer, showing how far through the presentation you are. It is enabled by default and can be toggled:
+
+```typst
+#show: tub-theme.with(
+  progress-bar: true,   // default: true
+  // ...
+)
+```
+
+Set `progress-bar: false` to disable it.
 
 ## Multi-Column Layout
 
@@ -159,6 +188,96 @@ Use `#meanwhile` to show content on all sub-slides simultaneously in a different
 #emphasis[Bold red inline text.]
 ```
 
+### TUB Block
+
+A styled block with a colored header bar and light body area:
+
+```typst
+#tub-block(title: [Key Insight])[
+  Content of the block goes here.
+]
+```
+
+Pre-titled wrappers for academic content:
+
+```typst
+#tub-theorem[
+  For any convex function $f$, a local minimum is also a global minimum.
+]
+
+#tub-definition[
+  A function $f$ is *convex* if ...
+]
+
+#tub-example[
+  The function $f(x) = x^2$ is convex on $RR$.
+]
+```
+
+### Quote Block
+
+A styled blockquote with optional attribution:
+
+```typst
+#quote-block(attribution: [Albert Einstein])[
+  Imagination is more important than knowledge.
+]
+```
+
+### Slide Citation
+
+Footnote-style citation within a slide:
+
+```typst
+This result#slide-cite[Author, _Title_, Publisher, 2024.] shows that...
+```
+
+### Slide Reference
+
+Bottom-aligned reference text:
+
+```typst
+#slide-ref[Source: Author, _Title_, 2024]
+```
+
+## Speaker Notes
+
+Touying 0.6.1 supports speaker notes natively. Add notes to any slide:
+
+```typst
+== My Slide
+
+Content visible to the audience.
+
+#speaker-note[
+  Remind audience about the key takeaway.
+  Mention the follow-up study.
+]
+```
+
+Speaker notes are hidden during the presentation by default. To display them on a second screen:
+
+```typst
+#show: tub-theme.with(
+  config-common(show-notes-on-second-screen: right),
+  // ...
+)
+```
+
+Notes are also exported to PDF presenter tools (pdfpc format).
+
+## Export to PPTX / HTML
+
+Touying provides an exporter utility for converting presentations to other formats. See the [touying-exporter](https://github.com/touying-typ/touying-exporter) project for details on exporting to PPTX and HTML.
+
+Basic workflow:
+
+1. Install `touying-exporter` (requires Node.js)
+2. Run: `touying-exporter export main.typ --format pptx`
+3. Or for HTML: `touying-exporter export main.typ --format html`
+
+Refer to the touying-exporter documentation for full options and requirements.
+
 ## Customization
 
 ### Theme Parameters
@@ -168,6 +287,7 @@ Use `#meanwhile` to show content on all sub-slides simultaneously in a different
   aspect-ratio: "16-9",       // or "4-3"
   department: [Your Dept],
   logo: image("your-logo.png"),
+  progress-bar: true,          // toggle footer progress bar
   footer-a: self => self.info.author,    // left footer
   footer-b: self => self.info.title,     // center footer
   footer-c: self => {                     // right footer
@@ -204,7 +324,7 @@ Use `#meanwhile` to show content on all sub-slides simultaneously in a different
 | TU Berlin Red | `#c50e1f` | Primary accent, headings |
 | Gray | `#717171` | Secondary text, subtitles |
 | Black | `#000000` | Body text |
-| White | `#ffffff` | Backgrounds, focus slide text |
+| White | `#ffffff` | Backgrounds, ending slide text |
 | Light Gray | `#f5f5f5` | Header background, highlight boxes |
 
 ## File Structure
@@ -220,6 +340,13 @@ tub-presentation/
 ├── README.md
 └── DISCLAIMER.md
 ```
+
+## Roadmap
+
+Planned features for future releases:
+
+- **Hero slide** — full-bleed image background with overlaid text
+- **Navigation bar** — mini-slides or section dots in the header for at-a-glance navigation
 
 ## Disclaimer
 

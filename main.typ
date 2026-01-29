@@ -5,6 +5,7 @@
   aspect-ratio: "16-9",
   department: [Faculty of Electrical Engineering and Computer Science],
   logo: image("assets/logos/tu_berlin.svg"),
+  progress-bar: true,
   config-info(
     title: [Research Methods in Computer Science],
     subtitle: [An Introduction to Academic Presentations],
@@ -15,6 +16,8 @@
 )
 
 #title-slide()
+
+#outline-slide()
 
 = Introduction
 
@@ -47,6 +50,8 @@ We employ a mixed-methods approach combining:
 #pause
 
 The methodology follows established best practices in the field.
+
+#speaker-note[Mention that the methodology was peer-reviewed by two independent experts.]
 
 == Comparison of Approaches
 
@@ -105,6 +110,36 @@ where:
 - $ell$ is the loss function
 - $lambda$ controls regularization strength
 
+== Formal Definitions
+
+#tub-theorem[
+  For any convex function $f: RR^n -> RR$, a local minimum is also a global minimum.
+]
+
+#v(0.4cm)
+
+#tub-definition[
+  A function $f$ is *convex* if for all $x, y in "dom" f$ and $0 <= theta <= 1$: $ f(theta x + (1 - theta) y) <= theta f(x) + (1 - theta) f(y) $
+]
+
+#v(0.4cm)
+
+#tub-example[
+  The function $f(x) = x^2$ is convex on $RR$, since $f''(x) = 2 > 0$ everywhere.
+]
+
+== Perspectives
+
+#quote-block(attribution: [Albert Einstein])[
+  If we knew what it was we were doing, it would not be called research, would it?
+]
+
+#v(0.5cm)
+
+#quote-block(attribution: [Donald Knuth])[
+  Premature optimization is the root of all evil.
+]
+
 = Conclusion
 
 == Summary
@@ -123,13 +158,18 @@ where:
   - Community benchmarking
 ]
 
-== Acknowledgements
+#ending-slide(title: [Thank You!])[
+  #text(size: 0.9em)[Dr. Example Author]
 
-This work was supported by:
-- TU Berlin Research Initiative
-- German Research Foundation (DFG)
-- Open-source contributors
+  #v(0.3cm)
 
-#v(0.5cm)
+  #text(size: 0.75em, fill: tub-gray)[
+    Faculty of Electrical Engineering and Computer Science \
+    Technische Universität Berlin \
+    #link("mailto:author@tu-berlin.de")[author\@tu-berlin.de]
+  ]
 
-#emphasis[All code and data are available at: github.com/example/project]
+  #v(0.5cm)
+
+  #text(size: 0.7em)[_Questions?_]
+]

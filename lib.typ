@@ -14,6 +14,50 @@
 
 // --- Content Helpers ---
 
+#let tub-block(title: none, body) = {
+  block(
+    width: 100%,
+    clip: true,
+    radius: 4pt,
+    stroke: 0.5pt + rgb("#e0e0e0"),
+    {
+      if title != none {
+        block(
+          width: 100%,
+          fill: rgb("#9a0b18"),
+          inset: (x: 0.6em, y: 0.4em),
+          text(fill: tub-white, weight: "bold", size: 0.85em, title),
+        )
+      }
+      block(
+        width: 100%,
+        fill: rgb("#fdf0f0"),
+        inset: 0.6em,
+        body,
+      )
+    },
+  )
+}
+
+#let tub-theorem(body) = tub-block(title: [Theorem], body)
+#let tub-definition(body) = tub-block(title: [Definition], body)
+#let tub-example(body) = tub-block(title: [Example], body)
+
+#let quote-block(attribution: none, body) = {
+  block(
+    width: 100%,
+    inset: (left: 1em, y: 0.4em),
+    stroke: (left: 3pt + tub-gray),
+    {
+      text(style: "italic", body)
+      if attribution != none {
+        v(0.3em)
+        align(right, text(size: 0.75em, fill: tub-gray, [--- #attribution]))
+      }
+    },
+  )
+}
+
 #let alert-box(content) = {
   block(
     width: 100%,
@@ -158,12 +202,61 @@
   touying-slide(self: self, main-body)
 })
 
+#let outline-slide(config: (:)) = touying-slide-wrapper(
+  self => {
+    self = utils.merge-dicts(
+      self,
+      config-page(header: none, footer: none),
+    )
+    let body = {
+      set align(top)
+      block(
+        width: 100%,
+        inset: 2em,
+        {
+          components.progressive-outline(level: 1, depth: 1)
+        },
+      )
+    }
+    touying-slide(self: self, config: config, body)
+  },
+)
+
+#let ending-slide(title: none, config: (:), body) = touying-slide-wrapper(
+  self => {
+    self = utils.merge-dicts(
+      self,
+      config-page(header: none, footer: none),
+    )
+    let main-body = {
+      set align(center + horizon)
+      if title != none {
+        block(
+          fill: self.colors.primary,
+          radius: 8pt,
+          inset: (x: 1.5em, y: 0.8em),
+          text(
+            size: 1.6em,
+            weight: "bold",
+            fill: self.colors.neutral-lightest,
+            title,
+          ),
+        )
+        v(1cm)
+      }
+      body
+    }
+    touying-slide(self: self, config: config, main-body)
+  },
+)
+
 // --- Main Theme Function ---
 
 #let tub-theme(
   aspect-ratio: "16-9",
   department: none,
   logo: none,
+  progress-bar: true,
   footer-a: self => self.info.author,
   footer-b: self => if self.info.short-title == auto {
     self.info.title
@@ -245,6 +338,13 @@
         align(horizon, utils.call-or-display(self, self.store.footer-c)),
       ),
     )
+    if self.store.at("progress-bar", default: false) {
+      components.progress-bar(
+        height: 2pt,
+        self.colors.primary,
+        self.colors.tertiary,
+      )
+    }
   }
 
   show: touying-slides.with(
@@ -293,6 +393,7 @@
       title: none,
       department: department,
       logo: logo,
+      progress-bar: progress-bar,
       footer-a: footer-a,
       footer-b: footer-b,
       footer-c: footer-c,
