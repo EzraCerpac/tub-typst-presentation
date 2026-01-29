@@ -41,6 +41,15 @@
   text(fill: tub-red, weight: "bold", body)
 }
 
+#let slide-cite(body) = {
+  footnote(body)
+}
+
+#let slide-ref(body) = {
+  v(1fr)
+  text(size: 0.55em, fill: tub-gray, body)
+}
+
 // --- Slide Functions ---
 
 #let slide(
@@ -116,7 +125,11 @@
 
     if info.date != none {
       v(0.4cm)
-      text(size: 0.65em, fill: self.colors.neutral-dark, utils.display-info-date(self))
+      text(
+        size: 0.65em,
+        fill: self.colors.neutral-dark,
+        utils.display-info-date(self),
+      )
     }
   }
   touying-slide(self: self, config: config, body)
@@ -143,21 +156,6 @@
     )
   }
   touying-slide(self: self, main-body)
-})
-
-#let focus-slide(config: (:), body) = touying-slide-wrapper(self => {
-  self = utils.merge-dicts(
-    self,
-    config-common(freeze-slide-counter: true),
-    config-page(
-      fill: self.colors.primary,
-      margin: 2em,
-      header: none,
-      footer: none,
-    ),
-  )
-  set text(fill: self.colors.neutral-lightest, weight: "bold", size: 1.5em)
-  touying-slide(self: self, config: config, align(horizon + center, body))
 })
 
 // --- Main Theme Function ---
@@ -223,18 +221,27 @@
       columns: (1fr, 1fr, 1fr),
       rows: 1.5em,
       rect(
-        width: 100%, height: 100%, fill: self.colors.neutral-darkest,
-        inset: (x: 0.8em), stroke: none,
+        width: 100%,
+        height: 100%,
+        fill: self.colors.neutral-darkest,
+        inset: (x: 0.8em),
+        stroke: none,
         align(horizon, utils.call-or-display(self, self.store.footer-a)),
       ),
       rect(
-        width: 100%, height: 100%, fill: self.colors.primary,
-        inset: (x: 0.8em), stroke: none,
+        width: 100%,
+        height: 100%,
+        fill: self.colors.primary,
+        inset: (x: 0.8em),
+        stroke: none,
         align(horizon, utils.call-or-display(self, self.store.footer-b)),
       ),
       rect(
-        width: 100%, height: 100%, fill: self.colors.neutral-darkest,
-        inset: (x: 0.8em), stroke: none,
+        width: 100%,
+        height: 100%,
+        fill: self.colors.neutral-darkest,
+        inset: (x: 0.8em),
+        stroke: none,
         align(horizon, utils.call-or-display(self, self.store.footer-c)),
       ),
     )
@@ -261,6 +268,12 @@
           fill: self.colors.neutral-darkest,
         )
         set list(marker: ("•", "◦", "▪"))
+        set footnote.entry(separator: line(
+          length: 30%,
+          stroke: 0.5pt + tub-gray,
+        ))
+        show footnote.entry: set text(size: 0.55em, fill: tub-gray)
+        set footnote(numbering: "1")
         show heading: set text(fill: self.colors.primary)
         body
       },

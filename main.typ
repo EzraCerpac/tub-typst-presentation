@@ -23,9 +23,7 @@
 - Academic presentations communicate research findings effectively
 - A consistent visual identity strengthens institutional recognition
 - This template follows the TU Berlin corporate design guidelines
-
 #pause
-
 - Built on *Touying*, a modern presentation framework for Typst
 - Supports animations, multi-column layouts, and structured slides
 
@@ -96,7 +94,7 @@ The analysis reveals three key factors:
 
 == Mathematical Framework
 
-The optimization objective is defined as:
+The optimization objective#slide-cite[Boyd & Vandenberghe, _Convex Optimization_, Cambridge University Press, 2004.] is defined as:
 
 $
   min_(theta) cal(L)(theta) = 1/N sum_(i=1)^N ell(f_theta (x_i), y_i) + lambda norm(theta)_2^2
@@ -135,7 +133,3 @@ This work was supported by:
 #v(0.5cm)
 
 #emphasis[All code and data are available at: github.com/example/project]
-
-#focus-slide[
-  Questions?
-]
