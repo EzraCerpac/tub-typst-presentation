@@ -4,12 +4,17 @@ version = "0.2.0"
 entrypoint = "lib.typ"
 authors = ["TU Berlin Community Contributors"]
 license = "MIT"
-description = "Unofficial TU Berlin corporate design presentation template for Typst"
-categories = ["slides", "presentation"]
-keywords = ["TU Berlin", "presentation", "corporate design", "Typst", "slides"]
-repository = "https://github.com/yourusername/tub-typst-presentation"
-homepage = "https://github.com/yourusername/tub-typst-presentation"
-documentation = "https://github.com/yourusername/tub-typst-presentation"
+description = "Unofficial TU Berlin design presentation slides."
+categories = ["presentation"]
+keywords = ["TU Berlin", "presentation", "student", "university", "corporate design", "slides", "touying"]
+repository = "https://github.com/EzraCerpac/tub-typst-presentation"
+compiler = "0.12.0"
+exclude = ["main.typ", "main.pdf", "DISCLAIMER.md"]
 
 [dependencies]
 touying = "0.6.1"
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
