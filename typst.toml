@@ -1,0 +1,15 @@
+[package]
+name = "tub-presentation"
+version = "0.2.0"
+entrypoint = "lib.typ"
+authors = ["TU Berlin Community Contributors"]
+license = "MIT"
+description = "Unofficial TU Berlin corporate design presentation template for Typst"
+categories = ["slides", "presentation"]
+keywords = ["TU Berlin", "presentation", "corporate design", "Typst", "slides"]
+repository = "https://github.com/yourusername/tub-typst-presentation"
+homepage = "https://github.com/yourusername/tub-typst-presentation"
+documentation = "https://github.com/yourusername/tub-typst-presentation"
+
+[dependencies]
+touying = "0.6.1"
