@@ -44,6 +44,10 @@ The authors assume no liability for:
 - TU Berlin logo and branding: Copyright © Technische Universität Berlin
 - Typst: Open-source document preparation system (https://typst.app)
 
+## AI Tools Disclosure
+
+Portions of this template's code, documentation, and examples were generated or revised with the assistance of AI tools. All AI-generated output was reviewed and approved by the project maintainers.
+
 ## Support & Contributions
 
 This is a community project. For issues, improvements, or corrections:
